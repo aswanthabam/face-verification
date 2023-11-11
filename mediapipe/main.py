@@ -1,7 +1,17 @@
 import cv2
 import mediapipe as mp
+import numpy as np
 
-def extract_face_features():
+def normalize_landmarks(landmarks):
+    landmarks_array = np.array([[landmark.x, landmark.y, landmark.z] for landmark in landmarks])
+    centroid = np.mean(landmarks_array, axis=0)
+    normalized_landmarks = landmarks_array - centroid
+    scale_factor = np.linalg.norm(normalized_landmarks, axis=0).max()
+    normalized_landmarks /= scale_factor
+    normalized_landmarks_flat = normalized_landmarks.flatten()
+    return normalized_landmarks_flat
+
+def extract_and_normalize_face_features():
     mp_face_mesh = mp.solutions.face_mesh
 
     face_mesh = mp_face_mesh.FaceMesh(min_detection_confidence=0.2, min_tracking_confidence=0.2)
@@ -29,9 +39,8 @@ def extract_face_features():
                     connection_drawing_spec=drawing_spec
                 )
 
-                for i, landmark in enumerate(face_landmarks.landmark):
-                    x_pixel, y_pixel = int(landmark.x * frame.shape[1]), int(landmark.y * frame.shape[0])
-                    print(f"Landmark {i}: ({x_pixel}, {y_pixel})")
+                normalized_landmarks = normalize_landmarks(face_landmarks.landmark)
+                print("Normalized Landmarks:", normalized_landmarks)
 
             cv2.imshow("Face Features", frame)
 
@@ -43,4 +52,4 @@ def extract_face_features():
 
 if __name__ == "__main__":
     mp_drawing = mp.solutions.drawing_utils
-    extract_face_features()
+    extract_and_normalize_face_features()
