@@ -1,6 +1,9 @@
+# example of loading the keras facenet model
+# from keras.models import load_model
 from keras.models import load_model
-from keras.utils import CustomObjectScope
 import tensorflow as tf
-with CustomObjectScope({'tf': tf}):
-  model = load_model('./model/nn4.small2.v1.h5')
-  print(model)
+# load the model
+model =tf.keras.models.load_model('facenet_keras.h5')
+# summarize input and output shape
+print(model.inputs)
+print(model.outputs)

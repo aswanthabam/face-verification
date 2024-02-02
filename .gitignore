@@ -1,3 +1,4 @@
-deepface/venv
-facial-landmarks-recognition/venv
-mediapipe/venv
+facenet/ubu
+.ipynb_checkpoints
+.vs
+venv
