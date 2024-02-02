@@ -8,4 +8,6 @@ in this repo we use dlib and resnet model for face verification.
 
 > the code for testing the algorithm is in `main.ipynb`
 
+> got the models from here : https://github.com/ageitgey/face_recognition_models/tree/master/face_recognition_models/models
+
 > Your suggestions and queries matters :)
